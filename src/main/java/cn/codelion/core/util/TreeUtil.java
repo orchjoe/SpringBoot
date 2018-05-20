@@ -117,8 +117,7 @@ public class TreeUtil {
 
 	// 判断是否有子节点
 	private boolean hasChild(List<TreeObject> list, TreeObject t) {
-		
-		List<TreeObject> treeObjects = getChildList(list, t);
+		//List<TreeObject> treeObjects = getChildList(list, t);
 		if (getChildList(list, t).size()>0) {
 			t.setIconCls("nianji-easyuitree");
 			return true;

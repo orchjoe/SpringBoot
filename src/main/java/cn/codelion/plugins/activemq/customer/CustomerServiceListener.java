@@ -16,8 +16,6 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-
 import cn.codelion.core.util.StringUtils;
 import cn.codelion.plugins.activemq.bean.ActivemqMsgBean;
 import cn.codelion.plugins.websocket.handler.StudentWebSocketHandler;
