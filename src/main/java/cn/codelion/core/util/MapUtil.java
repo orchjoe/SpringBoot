@@ -100,12 +100,13 @@ public class MapUtil {
 			Iterator iterator = set.iterator();
 			String key = "";
 			String value;
-			logger.debug("请求头信息@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			logger.debug("请求头信息----开始----@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			while (iterator.hasNext()) {
 				key = (String) iterator.next();
 				value = map.get(key);
 				logger.debug("key=" + key + " ：" + "value=" + value);
 			}
+			logger.debug("请求头信息----结束----@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		}
 		Map<String, String[]> requestMap = request.getParameterMap();
 		if (null == requestMap || requestMap.size() <= 0) {
@@ -114,13 +115,13 @@ public class MapUtil {
 			Iterator iterator = set.iterator();
 			String key = "";
 			String[] value;
-			logger.debug("请求参数信息@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			logger.debug("请求参数信息----开始----@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			while (iterator.hasNext()) {
 				key = (String) iterator.next();
 				value = requestMap.get(key);
 				logger.debug("key=" + key + " ：" + "value=" + value[0]);
 			}
-			logger.debug("请求参数信息@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			logger.debug("请求参数信息----结束----@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		}
 	}
 

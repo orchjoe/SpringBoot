@@ -16,6 +16,7 @@ public class JobAndTriggerImpl implements IJobAndTriggerService{
 	@Autowired
 	private JobAndTriggerMapper jobAndTriggerMapper;
 	
+	@Override
 	public List<JobAndTrigger> getJobAndTriggerDetails() {
 		List<JobAndTrigger> list = jobAndTriggerMapper.getJobAndTriggerDetails();
 		return list;

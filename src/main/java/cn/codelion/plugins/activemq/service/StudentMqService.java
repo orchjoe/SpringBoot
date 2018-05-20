@@ -9,6 +9,7 @@ package cn.codelion.plugins.activemq.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.codelion.plugins.activemq.bean.ActivemqMsgBean;
@@ -23,6 +24,6 @@ public class StudentMqService {
 	MQPublisherServer publisherServer;
 
 	public void sendMsg(ActivemqMsgBean activemqMsgBean) {
-		publisherServer.publish("student.aienglish.topic", JSONObject.toJSONString(activemqMsgBean));
+		publisherServer.publish("student.aienglish.topic", JSON.toJSONString(activemqMsgBean));
 	}
 }

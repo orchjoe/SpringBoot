@@ -1,16 +1,11 @@
 package cn.codelion.core.interceptors;
 
-import java.lang.reflect.Method;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.aop.AfterReturningAdvice;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.NamedThreadLocal;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,19 +13,13 @@ import cn.codelion.core.bean.SysUserBean;
 import cn.codelion.core.util.MapUtil;
 import cn.codelion.core.util.SessionUtil;
 
-/**
- * Created by WingLi on 2017/1/11.
+/** 
+ * @author  QiaoYu[www.codelion.cn]
  */
-@Component
-@Configuration
-public class LoggerInterceptor implements HandlerInterceptor, AfterReturningAdvice {
+public class LoggerInterceptor implements HandlerInterceptor {
 	public static final Logger logger = LoggerFactory.getLogger(LoggerInterceptor.class);
 	private NamedThreadLocal<Long> startTimeThreadLocal = new NamedThreadLocal<Long>("Request-StartTime");
 
-	@Override
-	public void afterReturning(Object o, Method method, Object[] objects, Object o1) throws Throwable {
-
-	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {

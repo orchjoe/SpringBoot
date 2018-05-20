@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.codelion.core.util.StringUtils;
@@ -34,7 +35,7 @@ public class CustomerServiceListener {
 	public void subscribe(TextMessage message) {
 		try {
 			String text = message.getText();
-			ActivemqMsgBean activemqMsgBean = JSONObject.parseObject(text, ActivemqMsgBean.class);
+			ActivemqMsgBean activemqMsgBean = JSON.parseObject(text, ActivemqMsgBean.class);
 			logger.debug("客户端接收到topic为[student.aienglish.topic]内容为:" + text);
 			if (StringUtils.isEmpty(activemqMsgBean.getType()) || activemqMsgBean.getType().equals("1")) {
 				logger.debug("作业考试推送");

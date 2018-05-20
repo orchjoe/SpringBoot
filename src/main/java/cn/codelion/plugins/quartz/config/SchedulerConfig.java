@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+
+import cn.codelion.core.util.YMLUtil;
 @Order(100)
 @Configuration
 public class SchedulerConfig {
@@ -24,7 +26,9 @@ public class SchedulerConfig {
 	@Bean
 	public Properties quartzProperties() throws IOException {
 		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-		propertiesFactoryBean.setLocation(new ClassPathResource("/config/quartz.properties"));
+		YMLUtil ymlUtil = new YMLUtil();
+		String env = YMLUtil.getSpringEnv();
+		propertiesFactoryBean.setLocation(new ClassPathResource("/config/quartz-"+env+".properties"));
 		// 在quartz.properties中的属性被读取并注入后再初始化对象
 		propertiesFactoryBean.afterPropertiesSet();
 		return propertiesFactoryBean.getObject();
