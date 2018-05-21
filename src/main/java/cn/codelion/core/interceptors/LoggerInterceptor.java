@@ -1,7 +1,5 @@
 package cn.codelion.core.interceptors;
 
-import java.text.SimpleDateFormat;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,18 +13,18 @@ import cn.codelion.core.bean.SysUserBean;
 import cn.codelion.core.util.MapUtil;
 import cn.codelion.core.util.SessionUtil;
 
-/** 
- * @author  QiaoYu[www.codelion.cn]
+/**
+ * @author QiaoYu[www.codelion.cn]
  */
 public class LoggerInterceptor implements HandlerInterceptor {
 	public static final Logger logger = LoggerFactory.getLogger(LoggerInterceptor.class);
 	private NamedThreadLocal<Long> startTimeThreadLocal = new NamedThreadLocal<Long>("Request-StartTime");
-
-
+	public static String userInfo = "匿名";
 	@Override
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 		long beginTime = System.currentTimeMillis();// 1、开始时间
 		startTimeThreadLocal.set(beginTime);// 线程绑定变量（该数据只有当前请求的线程可见）
+		MapUtil.requestParamToMap(httpServletRequest.getParameterMap());
 		return true;// 继续流程
 	}
 
@@ -40,32 +38,38 @@ public class LoggerInterceptor implements HandlerInterceptor {
 		long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
 		long consumeTime = endTime - beginTime;// 3、消耗的时间
 		String uri = request.getRequestURI();
-		MapUtil.printRequestMapObjs(request);
-		try {
-			
-			Object o = SessionUtil.getSessionUser(request);
+		Object o = SessionUtil.getSessionUser(request);
+		if (null != o) {
 			SysUserBean sysUserBean = (SysUserBean) o;
-			String userInfo = sysUserBean.getRealName() + "[" + sysUserBean.getRealName() + "](" + sysUserBean.getId().intValue() + ")";
-			logger.debug("计时结束：{}  耗时：{}  URI: {}  最大内存: {}m  已分配内存: {}m  已分配内存中的剩余空间: {}m  最大可用内存: {}m",
-	        		new SimpleDateFormat("hh:mm:ss.SSS").format(endTime), consumeTime,
-					request.getRequestURI(), Runtime.getRuntime().maxMemory()/1024/1024, Runtime.getRuntime().totalMemory()/1024/1024, Runtime.getRuntime().freeMemory()/1024/1024, 
-					(Runtime.getRuntime().maxMemory()-Runtime.getRuntime().totalMemory()+Runtime.getRuntime().freeMemory())/1024/1024); 
+			userInfo = sysUserBean.getRealName() + "[" + sysUserBean.getRealName() + "](" + sysUserBean.getId().intValue() + ")";
+		}
+		try {
 			if (consumeTime > 5000) {
-				logger.error(String.format("@@@%s@@@请求路径[%s] 使用时间 [%d] 毫秒", userInfo, uri, consumeTime));
+				logger.error("用户:{},耗时:{}毫秒,URI:{},最大内存:{}m,已分配内存:{}m,已分配内存中的剩余空间:{}m,最大可用内存:{}m", userInfo, consumeTime, uri, convertBToMB(Runtime.getRuntime().maxMemory()),
+						convertBToMB(Runtime.getRuntime().totalMemory()), convertBToMB(Runtime.getRuntime().freeMemory()),
+						convertBToMB(Runtime.getRuntime().maxMemory() - Runtime.getRuntime().totalMemory() + Runtime.getRuntime().freeMemory()));
 			} else {
-				logger.debug(String.format("@@@%s@@@请求路径[%s] 使用时间 [%d] 毫秒", userInfo, uri, consumeTime));
+				logger.debug("用户:{},耗时:{}毫秒,URI:{},最大内存:{}m,已分配内存:{}m,已分配内存中的剩余空间:{}m,最大可用内存:{}m", userInfo, consumeTime, uri, convertBToMB(Runtime.getRuntime().maxMemory()),
+						convertBToMB(Runtime.getRuntime().totalMemory()), convertBToMB(Runtime.getRuntime().freeMemory()),
+						convertBToMB(Runtime.getRuntime().maxMemory() - Runtime.getRuntime().totalMemory() + Runtime.getRuntime().freeMemory()));
 			}
 		} catch (Exception e2) {
+			MapUtil.printRequestMapObjs(request);
 			if (consumeTime > 5000) {
-				logger.error(String.format("匿名@@@请求路径[%s] 使用时间 [%d] 毫秒", uri, consumeTime));
+				logger.error("用户:{},耗时:{}毫秒,URI:{},最大内存:{}m,已分配内存:{}m,已分配内存中的剩余空间:{}m,最大可用内存:{}m", userInfo, consumeTime, uri, convertBToMB(Runtime.getRuntime().maxMemory()),
+						convertBToMB(Runtime.getRuntime().totalMemory()), convertBToMB(Runtime.getRuntime().freeMemory()),
+						convertBToMB(Runtime.getRuntime().maxMemory() - Runtime.getRuntime().totalMemory() + Runtime.getRuntime().freeMemory()));
 			} else {
-				logger.debug(String.format("匿名@@@请求路径[%s] 使用时间 [%d] 毫秒", uri, consumeTime));
-				
-				
-				
+				logger.debug("用户:{},耗时:{}毫秒,URI:{},最大内存:{}m,已分配内存:{}m,已分配内存中的剩余空间:{}m,最大可用内存:{}m", userInfo, consumeTime, uri, convertBToMB(Runtime.getRuntime().maxMemory()),
+						convertBToMB(Runtime.getRuntime().totalMemory()), convertBToMB(Runtime.getRuntime().freeMemory()),
+						convertBToMB(Runtime.getRuntime().maxMemory() - Runtime.getRuntime().totalMemory() + Runtime.getRuntime().freeMemory()));
+
 			}
+			e2.printStackTrace();
 		}
-		logger.debug("#####################################################################################################################");
 	}
 
+	public long convertBToMB(long b) {
+		return b / 1024 / 1024;
+	}
 }

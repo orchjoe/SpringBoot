@@ -86,7 +86,6 @@ public class MapUtil {
 	
 	@SuppressWarnings("rawtypes")
 	public static void printRequestMapObjs(HttpServletRequest request) {
-		
 		Map<String, String> map = new HashMap<String, String>();
 		Enumeration<String> headerNames = request.getHeaderNames();
 		while (headerNames.hasMoreElements()) {
