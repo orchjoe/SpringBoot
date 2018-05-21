@@ -19,6 +19,7 @@ import org.yaml.snakeyaml.Yaml;
  */
 public class YMLUtil {
 	public static final Logger logger = LoggerFactory.getLogger(YMLUtil.class);
+
 	@SuppressWarnings("rawtypes")
 	public static String getSpringEnv() {
 		try {
@@ -30,7 +31,7 @@ public class YMLUtil {
 				Map active = (Map) profiles.get("profiles");
 				String env = (String) active.get("active");
 				return env;
-			}else {
+			} else {
 				logger.error("读取环境配置文件url错误");
 				return "dev";
 			}

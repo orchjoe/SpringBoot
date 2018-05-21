@@ -26,7 +26,6 @@ public class SchedulerConfig {
 	@Bean
 	public Properties quartzProperties() throws IOException {
 		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-		YMLUtil ymlUtil = new YMLUtil();
 		String env = YMLUtil.getSpringEnv();
 		propertiesFactoryBean.setLocation(new ClassPathResource("/config/quartz-"+env+".properties"));
 		// 在quartz.properties中的属性被读取并注入后再初始化对象

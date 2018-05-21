@@ -4,7 +4,7 @@ server:
     uri-encoding: UTF-8
     basedir: d:/temp
   session:
-    timeout: 18000
+    timeout: 10
   context-path: /SpringBoot
 jdbc:
   datasource:
