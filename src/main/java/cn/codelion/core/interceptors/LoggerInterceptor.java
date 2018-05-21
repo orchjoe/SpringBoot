@@ -69,7 +69,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
 		}
 	}
 
-	public long convertBToMB(long b) {
+	public static long convertBToMB(long b) {
 		return b / 1024 / 1024;
 	}
 }

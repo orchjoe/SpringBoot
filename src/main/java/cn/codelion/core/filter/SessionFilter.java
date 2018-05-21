@@ -20,7 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.codelion.core.contents.ExceptionCode;
+import cn.codelion.core.contents.ExceptionContent;
 import cn.codelion.core.util.SessionUtil;
 import cn.codelion.core.web.bean.RestResult;
 
@@ -52,9 +52,8 @@ public class SessionFilter extends OncePerRequestFilter {
 						logger.debug("进入SessionFilter拦截器[Session是空的进入AJAX请求!]");
 						PrintWriter printWriter = response.getWriter();
 						RestResult<String> result = new RestResult<String>();
-						result.setCode(ExceptionCode.USER_NOLOGIN);
-						result.setMessage("未登录或者登陆超时");
-						result.setResult("未登录或者登陆超时");
+						result.setCode(ExceptionContent.USER_NOLOGIN);
+						result.setMsg("未登录或者登陆超时");
 						printWriter.print(JSON.toJSONString(result));
 						printWriter.flush();
 						printWriter.close();

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.codelion.core.web.bean.RestResult;
+import cn.codelion.core.web.bean.ResultUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -29,15 +30,13 @@ public class TestController extends BaseController{
 		try {
 			Object object = request.getSession().getAttribute("12345");
 			if (null == object) {
-				System.out.println("object是空的,设置object");
 				request.getSession().setAttribute("12345", "保存进去123456");
 			}else {
-				System.out.println("显示出来的object为:"+object);
 			}
-			return ok("123");
+			return ResultUtils.success("123");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return failed("哈哈", e.getMessage());
+			return ResultUtils.error("哈哈", e.getMessage());
 		}
 	}
 }

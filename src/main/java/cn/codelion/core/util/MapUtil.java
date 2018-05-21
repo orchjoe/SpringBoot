@@ -65,8 +65,11 @@ public class MapUtil {
 
 	@SuppressWarnings("rawtypes")
 	public static Map<String, String> requestParamToMap(Map<String, String[]> map) {
-		Set set = map.keySet();
 		Map<String, String> resultMap = new HashMap<String, String>();
+		if (null == map || map.isEmpty()) {
+			return resultMap;
+		}
+		Set set = map.keySet();
 		Iterator iterator = set.iterator();
 		String key = "";
 		String[] value;
