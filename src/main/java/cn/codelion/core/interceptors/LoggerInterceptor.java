@@ -1,5 +1,7 @@
 package cn.codelion.core.interceptors;
 
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,9 +42,14 @@ public class LoggerInterceptor implements HandlerInterceptor {
 		String uri = request.getRequestURI();
 		MapUtil.printRequestMapObjs(request);
 		try {
+			
 			Object o = SessionUtil.getSessionUser(request);
 			SysUserBean sysUserBean = (SysUserBean) o;
 			String userInfo = sysUserBean.getRealName() + "[" + sysUserBean.getRealName() + "](" + sysUserBean.getId().intValue() + ")";
+			logger.debug("计时结束：{}  耗时：{}  URI: {}  最大内存: {}m  已分配内存: {}m  已分配内存中的剩余空间: {}m  最大可用内存: {}m",
+	        		new SimpleDateFormat("hh:mm:ss.SSS").format(endTime), consumeTime,
+					request.getRequestURI(), Runtime.getRuntime().maxMemory()/1024/1024, Runtime.getRuntime().totalMemory()/1024/1024, Runtime.getRuntime().freeMemory()/1024/1024, 
+					(Runtime.getRuntime().maxMemory()-Runtime.getRuntime().totalMemory()+Runtime.getRuntime().freeMemory())/1024/1024); 
 			if (consumeTime > 5000) {
 				logger.error(String.format("@@@%s@@@请求路径[%s] 使用时间 [%d] 毫秒", userInfo, uri, consumeTime));
 			} else {
@@ -53,6 +60,9 @@ public class LoggerInterceptor implements HandlerInterceptor {
 				logger.error(String.format("匿名@@@请求路径[%s] 使用时间 [%d] 毫秒", uri, consumeTime));
 			} else {
 				logger.debug(String.format("匿名@@@请求路径[%s] 使用时间 [%d] 毫秒", uri, consumeTime));
+				
+				
+				
 			}
 		}
 		logger.debug("#####################################################################################################################");
