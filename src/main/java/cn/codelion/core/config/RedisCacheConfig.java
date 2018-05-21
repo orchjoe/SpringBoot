@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @date 2018年5月3日 下午4:29:23
  */
 @Service
-public class MobileRedisCache {
+public class RedisCacheConfig {
 	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
 	private static int TIME_OUT = 7 * 24 * 60;
