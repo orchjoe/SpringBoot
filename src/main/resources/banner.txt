@@ -21,3 +21,6 @@
 | |              | || |              | || |              | || |              | |
 | '--------------' || '--------------' || '--------------' || '--------------' |
  '----------------'  '----------------'  '----------------'  '----------------' 
+ ${AnsiColor.BLACK}
+Application Version: ${application.version}${application.formatted-version}
+Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
