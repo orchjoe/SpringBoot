@@ -26,7 +26,7 @@
 	<repositories>
 		<repository>
 			<id>codelion-repos</id>
-			<name>codelion Repository</name>
+			<name>Alibaba Repository</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
 		</repository>
 	</repositories>
@@ -34,12 +34,24 @@
 	<!-- 设定插件仓库 -->
 	<pluginRepositories>
 		<pluginRepository>
-			<id>jeesite-repos</id>
-			<name>Jeesite Repository</name>
+			<id>codelion-repos</id>
+			<name>Alibaba Repository</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
 		</pluginRepository>
 	</pluginRepositories>
+	<scm>
+		<url>https://github.com/orchjoe/SpringBoot</url>
+		<connection>git@github.com:orchjoe/SpringBoot.git</connection>
+		<developerConnection>https://github.com/orchjoe/SpringBoot</developerConnection>
+	</scm>
 
+	<developers>
+		<developer>
+			<name>乔石鹏</name>
+			<email>qiaoshemei@163.com</email>
+			<url>http://www.codelion.cn</url>
+		</developer>
+	</developers>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
